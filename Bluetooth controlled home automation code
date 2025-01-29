@@ -1,0 +1,45 @@
+ // bulb is connected to the Arduino Uno pin 10
+int bulbPin = 10;   
+// motor is connected to Arduino Uno pin 9 through the transitor base
+int motorPin = 9;   
+
+void setup() {
+  // Set bulb pin as output
+  pinMode(bulbPin, OUTPUT); 
+  // set motor pin as output
+  pinMode(motorPin, OUTPUT); 
+  // serial communication
+  Serial.begin(9600);   
+  Serial.println("Ready To Go. use below command ot operate:");
+  Serial.println("'B1' to ON Bulb");
+  Serial.println("'B0' to OFF Bulb");
+  Serial.println("'M1' to ON Motor");
+  Serial.println("'M0' to OFF  Motor");
+}
+
+void loop() {
+  if (Serial.available()) {
+    String command = Serial.readString(); // Read the input command
+    command.trim(); // Remove trailing spaces and newlines
+
+    // To Control bulb
+    if (command.equalsIgnoreCase("B1")) {
+      digitalWrite(bulbPin, HIGH); // Turn ON the bulb
+      Serial.println("light ON");
+    } else if (command. equalsIgnoreCase("B0")) {
+      digitalWrite(bulbPin, LOW);  // Turn off bulb
+      Serial.println("light OFF");
+    }
+
+    // To Control motor
+    else if (command.equalsIgnoreCase("M1")) {
+      digitalWrite(motorPin, HIGH); // Turn on Motor
+      Serial.println("motor start running");
+    } else if (command.equalsIgnoreCase ("M0")) {
+      digitalWrite(motorPin, LOW);  // Turn off Motor
+      Serial.println("motor is  stop running");
+    } else {
+      Serial.println("this Command is invalid");
+    }
+  }
+}
